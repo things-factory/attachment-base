@@ -4,4 +4,4 @@ export const queries = [Attachment.Query]
 
 export const mutations = [Attachment.Mutation]
 
-export const types = [Attachment.Types]
+export const types = [...Attachment.Types]
