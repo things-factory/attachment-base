@@ -47,7 +47,7 @@ const processUpload = async upload => {
     .pop()
     .split('/')
     .pop()
-  return await storeDB({ id, filename, mimetype, encoding, path })
+  return await storeDB({ id, name: filename, mimetype, encoding, path, category: mimetype.split('/').shift() })
 }
 
 export async function singleUpload(_, { file }) {

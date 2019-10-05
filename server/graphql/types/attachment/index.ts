@@ -20,11 +20,11 @@ export const Mutation = `
 
   singleUpload(
     file: Upload!
-  ): File
+  ): Attachment
 
   multipleUpload(
     files: [Upload]!
-  ): [File]
+  ): [Attachment]
 `
 
 export const Query = `
