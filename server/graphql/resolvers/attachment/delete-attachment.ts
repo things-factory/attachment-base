@@ -3,18 +3,19 @@ import { Attachment } from '../../../entities'
 import * as fs from 'fs'
 import * as path from 'path'
 
-export const deleteAttachment = {
-  async deleteAttachment(_: any, { id }, context: any) {
-    const repository = getRepository(Attachment)
+import { ATTACHMENT_DIR } from './attachment-const'
 
-    const attachment = await repository.findOne(id)
-    await repository.delete(id)
+export async function deleteAttachment(_: any, { id }, context: any) {
+  const repository = getRepository(Attachment)
+  const attachment = await repository.findOne({
+    where: { domain: context.state.domain, id }
+  })
 
-    const uploadDir = process.env.UPLOAD_DIR
-    const fullpath = path.resolve(uploadDir, attachment.path)
+  await repository.delete(id)
 
-    await fs.unlink(fullpath, e => {
-      console.error(e)
-    })
-  }
+  const fullpath = path.resolve(ATTACHMENT_DIR, attachment.path)
+
+  await fs.unlink(fullpath, e => {
+    console.error(e)
+  })
 }

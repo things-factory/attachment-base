@@ -3,7 +3,10 @@ import { Domain } from '@things-factory/shell'
 import { Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity('attachments')
-@Index('ix_attachment_0', (attachment: Attachment) => [attachment.domain, attachment.name], { unique: true })
+@Index('ix_attachment_0', (attachment: Attachment) => [attachment.domain, attachment.name], { unique: false })
+@Index('ix_attachment_1', (attachment: Attachment) => [attachment.domain, attachment.category, attachment.name], {
+  unique: false
+})
 export class Attachment {
   @PrimaryGeneratedColumn('uuid')
   id: string

@@ -13,9 +13,9 @@ export const Query = {
 }
 
 export const Mutation = {
-  ...updateAttachment,
-  ...createAttachment,
-  ...deleteAttachment,
+  updateAttachment,
+  createAttachment,
+  deleteAttachment,
   singleUpload,
   multipleUpload
 }
