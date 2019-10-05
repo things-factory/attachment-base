@@ -19,8 +19,9 @@ const storeFS = ({ stream, filename }) => {
   const id = uuid()
   const ext = filename.split('.').pop()
   const path = ext ? resolve(uploadDir, `${id}.${ext}`) : resolve(uploadDir, id)
+  var size = 0
 
-  return new Promise<{ id: string; path: string }>((resolve, reject) =>
+  return new Promise<{ id: string; path: string; size: number }>((resolve, reject) =>
     stream
       .on('error', error => {
         if (stream.truncated)
@@ -30,7 +31,8 @@ const storeFS = ({ stream, filename }) => {
       })
       .pipe(fs.createWriteStream(path))
       .on('error', error => reject(error))
-      .on('finish', () => resolve({ id, path }))
+      .on('data', chunk => (size += chunk.length))
+      .on('finish', () => resolve({ id, path, size }))
   )
 }
 
@@ -41,13 +43,13 @@ const storeDB = async file => {
 
 const processUpload = async upload => {
   const { stream, filename, mimetype, encoding } = await upload
-  var { id, path } = await storeFS({ stream, filename })
+  var { id, path, size } = await storeFS({ stream, filename })
   path = path
     .split('\\')
     .pop()
     .split('/')
     .pop()
-  return await storeDB({ id, name: filename, mimetype, encoding, path, category: mimetype.split('/').shift() })
+  return await storeDB({ id, name: filename, mimetype, encoding, path, category: mimetype.split('/').shift(), size })
 }
 
 export async function singleUpload(_, { file }) {
