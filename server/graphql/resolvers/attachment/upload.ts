@@ -69,8 +69,8 @@ export async function singleUpload(_, { file }, context: any) {
   return await processUpload(context, file)
 }
 
-export async function multipleUpload(_, { files }) {
-  const { resolve, reject } = await promisesAll.all(files.map(processUpload))
+export async function multipleUpload(_, { files }, context: any) {
+  const { resolve, reject } = await promisesAll.all(files.map(file => processUpload(context, file)))
 
   if (reject.length)
     reject.forEach(({ name, message }) =>
