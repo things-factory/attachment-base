@@ -1,3 +1,7 @@
+const send = require('koa-send')
+const path = require('path')
+const ATTACHMENT_DIR = process.env.ATTACHMENT_DIR || path.join(process.cwd(), 'attachments')
+
 process.on('bootstrap-module-history-fallback' as any, (app, fallbackOption) => {
   /*
    * fallback white list를 추가할 수 있다
@@ -13,4 +17,9 @@ process.on('bootstrap-module-route' as any, (app, routes) => {
    * ex) routes.get('/path', async(context, next) => {})
    * ex) routes.post('/path', async(context, next) => {})
    */
+
+  // for providing resource
+  routes.get('/attachment/:attachment', async (context, next) => {
+    await send(context, context.params.attachment, { root: ATTACHMENT_DIR })
+  })
 })

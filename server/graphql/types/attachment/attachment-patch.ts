@@ -4,7 +4,9 @@ export const AttachmentPatch = gql`
   input AttachmentPatch {
     name: String
     description: String
-    ext: String
+    mimetype: String
+    encoding: String
+    category: String
     path: String
     size: String
   }

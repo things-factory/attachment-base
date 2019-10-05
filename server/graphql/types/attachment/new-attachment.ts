@@ -4,8 +4,9 @@ export const NewAttachment = gql`
   input NewAttachment {
     name: String!
     description: String
+    mimetype: String!
+    encoding: String!
     category: String!
-    ext: String!
     path: String!
     size: String!
   }

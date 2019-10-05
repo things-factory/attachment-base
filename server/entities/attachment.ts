@@ -8,14 +8,24 @@ export class Attachment {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @ManyToOne(type => Domain)
+  @ManyToOne(type => Domain, {
+    nullable: false
+  })
   domain: Domain
 
   @Column()
   name: string
 
+  @Column({
+    nullable: true
+  })
+  description: string
+
   @Column()
-  ext: string
+  mimetype: string
+
+  @Column('text')
+  encoding: string
 
   @Column()
   category: string
@@ -25,11 +35,6 @@ export class Attachment {
 
   @Column()
   size: string
-
-  @Column({
-    nullable: true
-  })
-  description: string
 
   @CreateDateColumn()
   createdAt: Date

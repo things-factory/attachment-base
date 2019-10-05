@@ -7,6 +7,7 @@ export const attachmentsResolver = {
     const queryBuilder = getRepository(Attachment).createQueryBuilder()
     buildQuery(queryBuilder, params, context)
     const [items, total] = await queryBuilder
+      .leftJoinAndSelect('Attachment.domain', 'Domain')
       .leftJoinAndSelect('Attachment.creator', 'Creator')
       .leftJoinAndSelect('Attachment.updater', 'Updater')
       .getManyAndCount()
