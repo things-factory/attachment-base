@@ -17,6 +17,14 @@ export const Mutation = `
   deleteAttachment (
     id: String!
   ): Attachment
+
+  singleUpload(
+    file: Upload!
+  ): File
+
+  multipleUpload(
+    files: [Upload]!
+  ): [File]
 `
 
 export const Query = `
