@@ -36,24 +36,37 @@ const storeFS = ({ stream, filename }) => {
   )
 }
 
-const storeDB = async file => {
+const storeDB = async (context, attachment) => {
   const repository = getRepository(Attachment)
-  return await repository.save(file)
+  return await getRepository(Attachment).save({
+    domain: context.state.domain,
+    creatorId: context.state.user.id,
+    updaterId: context.state.user.id,
+    ...attachment
+  })
 }
 
-const processUpload = async upload => {
-  const { stream, filename, mimetype, encoding } = await upload
+const processUpload = async (context, file) => {
+  const { stream, filename, mimetype, encoding } = await file
   var { id, path, size } = await storeFS({ stream, filename })
   path = path
     .split('\\')
     .pop()
     .split('/')
     .pop()
-  return await storeDB({ id, name: filename, mimetype, encoding, path, category: mimetype.split('/').shift(), size })
+  return await storeDB(context, {
+    id,
+    name: filename,
+    mimetype,
+    encoding,
+    path,
+    category: mimetype.split('/').shift(),
+    size
+  })
 }
 
-export async function singleUpload(_, { file }) {
-  return await processUpload(file)
+export async function singleUpload(_, { file }, context: any) {
+  return await processUpload(context, file)
 }
 
 export async function multipleUpload(_, { files }) {
