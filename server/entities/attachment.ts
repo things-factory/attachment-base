@@ -7,6 +7,9 @@ import { Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedCol
 @Index('ix_attachment_1', (attachment: Attachment) => [attachment.domain, attachment.category, attachment.name], {
   unique: false
 })
+@Index('ix_attachment_2', (attachment: Attachment) => [attachment.domain, attachment.refBy], {
+  unique: false
+})
 export class Attachment {
   @PrimaryGeneratedColumn('uuid')
   id: string
@@ -30,10 +33,14 @@ export class Attachment {
   @Column('text')
   encoding: string
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   category: string
 
-  @Column()
+  @Column({
+    nullable: true
+  })
   refBy: String
 
   @Column()
