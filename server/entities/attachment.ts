@@ -1,4 +1,5 @@
 import { User } from '@things-factory/auth-base'
+import { Bizplace } from '@things-factory/biz-base'
 import { Domain } from '@things-factory/shell'
 import { Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
@@ -32,6 +33,9 @@ export class Attachment {
 
   @Column()
   category: string
+
+  @Column()
+  refBy: String
 
   @Column()
   path: string

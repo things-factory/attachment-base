@@ -1,16 +1,14 @@
-import { buildQuery, ListParam } from '@things-factory/shell'
+import { convertListParams, ListParam } from '@things-factory/shell'
 import { getRepository } from 'typeorm'
 import { Attachment } from '../../../entities'
 
 export const attachmentsResolver = {
   async attachments(_: any, params: ListParam, context: any) {
-    const queryBuilder = getRepository(Attachment).createQueryBuilder()
-    buildQuery(queryBuilder, params, context)
-    const [items, total] = await queryBuilder
-      .leftJoinAndSelect('Attachment.domain', 'Domain')
-      .leftJoinAndSelect('Attachment.creator', 'Creator')
-      .leftJoinAndSelect('Attachment.updater', 'Updater')
-      .getManyAndCount()
+    const convertedParams = convertListParams(params)
+    const [items, total] = await getRepository(Attachment).findAndCount({
+      ...convertedParams,
+      relations: ['domain', 'creator', 'updater']
+    })
 
     return { items, total }
   }

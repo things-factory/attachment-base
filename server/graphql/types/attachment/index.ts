@@ -2,7 +2,6 @@ import { Attachment } from './attachment'
 import { NewAttachment } from './new-attachment'
 import { AttachmentPatch } from './attachment-patch'
 import { AttachmentList } from './attachment-list'
-import { Filter, Pagination, Sorting } from '@things-factory/shell'
 
 export const Mutation = `
   createAttachment (
@@ -32,4 +31,4 @@ export const Query = `
   attachment(id: String!): Attachment
 `
 
-export const Types = [Filter, Pagination, Sorting, Attachment, NewAttachment, AttachmentPatch, AttachmentList]
+export const Types = [Attachment, NewAttachment, AttachmentPatch, AttachmentList]

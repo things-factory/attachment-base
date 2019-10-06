@@ -8,5 +8,6 @@ export const AttachmentPatch = gql`
     encoding: String
     category: String
     file: Upload
+    refBy: String
   }
 `
