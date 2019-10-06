@@ -9,6 +9,10 @@ export const Mutation = `
     attachment: NewAttachment!
   ): Attachment
 
+  createAttachments (
+    attachments: [NewAttachment]!
+  ): [Attachment]
+
   updateAttachment (
     id: String!
     patch: AttachmentPatch!
