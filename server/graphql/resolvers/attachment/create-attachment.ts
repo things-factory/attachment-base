@@ -3,7 +3,7 @@ import { Attachment } from '../../../entities'
 import { storeFS } from './store-filesystem'
 
 export async function createAttachment(_: any, { attachment }, context: any) {
-  const { file, category } = attachment
+  const { file, category, refBy } = attachment
   const { stream, filename, mimetype, encoding } = await file
 
   var { id, path, size } = await storeFS({ stream, filename })
@@ -21,6 +21,7 @@ export async function createAttachment(_: any, { attachment }, context: any) {
     name: filename,
     mimetype,
     encoding,
+    refBy,
     category: category || mimetype.split('/').shift(),
     size: size as any,
     path
