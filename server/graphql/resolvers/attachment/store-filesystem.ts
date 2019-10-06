@@ -14,7 +14,7 @@ export const storeFS = ({ stream, filename }) => {
   const id = uuid()
   const ext = filename.split('.').pop()
   const path = ext ? resolve(uploadDir, `${id}.${ext}`) : resolve(uploadDir, id)
-  var size = 0
+  var size: number = 0
 
   return new Promise<{ id: string; path: string; size: number }>((resolve, reject) =>
     stream

@@ -7,5 +7,6 @@ export const AttachmentPatch = gql`
     mimetype: String
     encoding: String
     category: String
+    file: Upload
   }
 `
