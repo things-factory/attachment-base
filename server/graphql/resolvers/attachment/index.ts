@@ -5,6 +5,7 @@ import { updateAttachment } from './update-attachment'
 import { createAttachment } from './create-attachment'
 import { createAttachments } from './create-attachments'
 import { deleteAttachment } from './delete-attachment'
+import { deleteAttachmentsByRef } from './delete-attachments-by-ref'
 
 import { singleUpload, multipleUpload } from './upload'
 
@@ -18,6 +19,7 @@ export const Mutation = {
   createAttachment,
   createAttachments,
   deleteAttachment,
+  deleteAttachmentsByRef,
   singleUpload,
   multipleUpload
 }
