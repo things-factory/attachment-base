@@ -21,6 +21,10 @@ export const Mutation = `
     id: String!
   ): Attachment
 
+  deleteAttachmentsByRef (
+    refBys: String!
+  ): Attachment
+
   singleUpload(
     file: Upload!
   ): Attachment
