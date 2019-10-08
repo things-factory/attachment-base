@@ -4,7 +4,8 @@ import { storeFS } from './store-filesystem'
 
 export async function createAttachment(_: any, { attachment }, context: any) {
   const { file, category, refBy } = attachment
-  const { stream, filename, mimetype, encoding } = await file
+  const { createReadStream, filename, mimetype, encoding } = await file
+  const stream = createReadStream()
 
   var { id, path, size } = await storeFS({ stream, filename })
   path = path
