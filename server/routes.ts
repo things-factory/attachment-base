@@ -1,6 +1,5 @@
 const send = require('koa-send')
-const path = require('path')
-const ATTACHMENT_DIR = process.env.ATTACHMENT_DIR || path.join(process.cwd(), 'attachments')
+const ATTACHMENT_DIR = require('./attachment-const')
 
 process.on('bootstrap-module-history-fallback' as any, (app, fallbackOption) => {
   /*

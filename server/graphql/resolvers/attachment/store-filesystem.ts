@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4'
 
-import { ATTACHMENT_DIR } from './attachment-const'
+import { ATTACHMENT_DIR } from '../../../attachment-const'
 
 import * as fs from 'fs'
 import * as mkdirp from 'mkdirp'

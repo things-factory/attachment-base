@@ -3,7 +3,7 @@ import * as path from 'path'
 import promisesAll from 'promises-all'
 import { getRepository, In } from 'typeorm'
 import { Attachment } from '../../../entities'
-import { ATTACHMENT_DIR } from './attachment-const'
+import { ATTACHMENT_DIR } from '../../../attachment-const'
 
 export async function deleteAttachmentsByRef(_: any, { refBys }, context: any) {
   const repository = getRepository(Attachment)
