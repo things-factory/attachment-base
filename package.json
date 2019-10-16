@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/attachment-base",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
@@ -31,5 +31,7 @@
     "@things-factory/auth-base": "*",
     "@things-factory/shell": "*"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@things-factory/board-app": "*"
+  }
 }
