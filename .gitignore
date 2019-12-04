@@ -4,6 +4,8 @@ node_modules/
 logs/
 licenses/
 attachments/
+config.development.js
+config.production.js
 ormconfig.js
 yarn*.*
 package-lock.json
