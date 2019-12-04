@@ -26,6 +26,6 @@ process.on('bootstrap-module-route' as any, (app, routes) => {
 
   // for providing resource
   routes.get('/attachment/:attachment', async (context, next) => {
-    await STORAGE.send(context, context.params.attachment)
+    await STORAGE.sendFile(context, context.params.attachment)
   })
 })
