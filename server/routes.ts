@@ -1,5 +1,7 @@
-const send = require('koa-send')
-const { ATTACHMENT_DIR } = require('./attachment-const')
+const { STORAGE } = require('./attachment-const')
+
+import './storage-file'
+import './storage-s3'
 
 process.on('bootstrap-module-history-fallback' as any, (app, fallbackOption) => {
   /*
@@ -24,6 +26,6 @@ process.on('bootstrap-module-route' as any, (app, routes) => {
 
   // for providing resource
   routes.get('/attachment/:attachment', async (context, next) => {
-    await send(context, context.params.attachment, { root: ATTACHMENT_DIR })
+    await STORAGE.send(context, context.params.attachment)
   })
 })

@@ -1,16 +1,17 @@
 import uuid from 'uuid/v4'
-import { logger } from '@things-factory/env'
-
-import { ATTACHMENT_DIR, STORAGE } from './attachment-const'
-
 import * as fs from 'fs'
 import * as mkdirp from 'mkdirp'
 import { resolve } from 'path'
+const send = require('koa-send')
+
+import { config, logger } from '@things-factory/env'
+import { STORAGE } from './attachment-const'
 
 if (STORAGE && STORAGE.type == 'file') {
+  const uploadDir = config.getPath(null, STORAGE.base || 'attachments')
+
   STORAGE.uploadFile = ({ stream, filename }) => {
-    const uploadDir = ATTACHMENT_DIR
-    mkdirp.sync(ATTACHMENT_DIR)
+    mkdirp.sync(uploadDir)
 
     const id = uuid()
     const ext = filename.split('.').pop()
@@ -38,15 +39,14 @@ if (STORAGE && STORAGE.type == 'file') {
   }
 
   STORAGE.deleteFile = async path => {
-    const fullpath = resolve(ATTACHMENT_DIR, path)
+    const fullpath = resolve(uploadDir, path)
 
     await fs.unlink(fullpath, logger.error)
   }
 
-  console.log(
-    '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n',
-    STORAGE.type,
-    STORAGE.uploadFile,
-    STORAGE.deleteFile
-  )
+  STORAGE.sendFile = async (context, attachment) => {
+    await send(context, attachment, { root: uploadDir })
+  }
+
+  logger.info('File Storage is Ready.')
 }

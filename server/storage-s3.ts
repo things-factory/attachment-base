@@ -1,8 +1,9 @@
 import uuid from 'uuid/v4'
 import AWS from 'aws-sdk'
-import { STORAGE } from './attachment-const'
-
+import { logger } from '@things-factory/env'
 const { PassThrough } = require('stream')
+
+import { STORAGE } from './attachment-const'
 
 if (STORAGE && STORAGE.type == 's3') {
   const S3 = new AWS.S3({
@@ -72,10 +73,10 @@ if (STORAGE && STORAGE.type == 's3') {
   //   }
   // )
 
-  console.log(
-    '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n',
-    STORAGE.type,
-    STORAGE.uploadFile,
-    STORAGE.deleteFile
-  )
+  STORAGE.sendFile = async (context, attachment) => {
+    // TODO implement me
+    // await send(context, attachment, { root: uploadDir })
+  }
+
+  logger.info('S3 Bucket Storage is Ready.')
 }
