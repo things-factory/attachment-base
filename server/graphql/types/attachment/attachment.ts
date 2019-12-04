@@ -10,6 +10,7 @@ export const Attachment = gql`
     encoding: String
     category: String
     path: String
+    fullpath: String
     refBy: String
     size: String
     creator: User

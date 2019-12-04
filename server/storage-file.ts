@@ -44,7 +44,7 @@ if (STORAGE && STORAGE.type == 'file') {
     await fs.unlink(fullpath, logger.error)
   }
 
-  STORAGE.sendFile = async (context, attachment) => {
+  STORAGE.sendFile = async (context, attachment, next) => {
     await send(context, attachment, { root: uploadDir })
   }
 

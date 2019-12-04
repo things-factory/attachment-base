@@ -2,6 +2,8 @@ import uuid from 'uuid/v4'
 import AWS from 'aws-sdk'
 import { logger } from '@things-factory/env'
 const { PassThrough } = require('stream')
+const mime = require('mime')
+const { fs } = require('memfs')
 
 import { STORAGE } from './attachment-const'
 
@@ -30,8 +32,9 @@ if (STORAGE && STORAGE.type == 's3') {
                 Key: key,
                 Body: pass
               },
-              (err, data) => (err ? reject(err) : resolve({ id, path: data.Location, size }))
+              (err, data) => (err ? reject(err) : resolve({ id, path: key, size }))
             )
+            // Response data from S3
             // {
             //   ETag:"b2b068edcc5517a75e1119c785e1cf87",
             //   Location:"https://opa-one.s3.amazonaws.com/873af101-4e92-4164-b738-062af5b2413b.png",
@@ -50,13 +53,14 @@ if (STORAGE && STORAGE.type == 's3') {
   STORAGE.deleteFile = path => {
     return new Promise((resolve, reject) =>
       S3.deleteObject(
-        { Bucket: STORAGE.bucketName, Key: path.split('/').pop() /* path에서 key를 추출해야한다. */ },
+        {
+          Bucket: STORAGE.bucketName,
+          Key: path
+        },
         (err, data) => (err ? reject(err) : resolve(data))
       )
     )
   }
-
-  // STORAGE.downloadFile =
 
   /* creating bucket */
   // s3.createBucket(
@@ -73,9 +77,24 @@ if (STORAGE && STORAGE.type == 's3') {
   //   }
   // )
 
-  STORAGE.sendFile = async (context, attachment) => {
-    // TODO implement me
-    // await send(context, attachment, { root: uploadDir })
+  /* TODO Streaming to Streaming 으로 구현하라. */
+  STORAGE.sendFile = async (context, attachment, next) => {
+    const result = await S3.getObject({
+      Bucket: STORAGE.bucketName,
+      Key: attachment
+    }).promise()
+
+    fs.writeFileSync(`/${attachment}`, result.Body)
+
+    context.set({
+      'Content-Length': result.ContentLength,
+      'Content-Type': mime.getType(attachment),
+      'Last-Modified': result.LastModified,
+      ETag: result.ETag,
+      'Cache-Control': 'public, max-age=31556926'
+    })
+
+    context.body = await fs.createReadStream(`/${attachment}`)
   }
 
   logger.info('S3 Bucket Storage is Ready.')

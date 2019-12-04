@@ -2,6 +2,8 @@ import { User } from '@things-factory/auth-base'
 import { Domain } from '@things-factory/shell'
 import { Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
+const { ATTACHMENT_PATH } = require('../attachment-const')
+
 @Entity('attachments')
 @Index('ix_attachment_0', (attachment: Attachment) => [attachment.domain, attachment.name], { unique: false })
 @Index('ix_attachment_1', (attachment: Attachment) => [attachment.domain, attachment.category, attachment.name], {
@@ -64,4 +66,8 @@ export class Attachment {
     nullable: true
   })
   updater: User
+
+  get fullpath(): string {
+    return `/${ATTACHMENT_PATH}/${this.path}`
+  }
 }

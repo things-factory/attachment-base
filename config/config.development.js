@@ -1,4 +1,5 @@
 module.exports = {
+  attachmentPath: 'attachment',
   storage: {
     type: 'file',
     base: 'attachments'
