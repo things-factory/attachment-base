@@ -4,7 +4,7 @@ import { Attachment } from '../../../entities'
 
 export const attachmentsResolver = {
   async attachments(_: any, params: ListParam, context: any) {
-    const convertedParams = convertListParams(params)
+    const convertedParams = convertListParams(params, context.state.domain.id)
     const [items, total] = await getRepository(Attachment).findAndCount({
       ...convertedParams,
       relations: ['domain', 'creator', 'updater']
