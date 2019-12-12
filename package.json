@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/attachment-base",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
@@ -29,8 +29,8 @@
   },
   "dependencies": {
     "@things-factory/auth-base": "^1.0.0-alpha.1",
-    "@things-factory/shell": "^1.0.0-alpha.1",
     "@things-factory/env": "^1.0.0-alpha.1",
+    "@things-factory/shell": "^1.0.0-alpha.1",
     "aws-sdk": "^2.582.0",
     "memfs": "^3.0.1",
     "mime": "^2.4.4"
