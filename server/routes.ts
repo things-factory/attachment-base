@@ -1,11 +1,17 @@
-const send = require('koa-send')
-const { ATTACHMENT_DIR } = require('./attachment-const')
+const { STORAGE, ATTACHMENT_PATH } = require('./attachment-const')
+import './storage-file'
+import './storage-s3'
 
 process.on('bootstrap-module-history-fallback' as any, (app, fallbackOption) => {
   /*
    * fallback white list를 추가할 수 있다
    *
-   * ex) fallbackOption.whiteList.push('/authcheck')
+   * ex)
+   * var paths = [
+   *   'aaa',
+   *   'bbb'
+   * ]
+   * fallbackOption.whiteList.push(`^\/(${paths.join('|')})($|[/?#])`)
    */
 })
 
@@ -18,7 +24,7 @@ process.on('bootstrap-module-route' as any, (app, routes) => {
    */
 
   // for providing resource
-  routes.get('/attachment/:attachment', async (context, next) => {
-    await send(context, context.params.attachment, { root: ATTACHMENT_DIR })
+  routes.get(`/${ATTACHMENT_PATH}/:attachment`, async (context, next) => {
+    await STORAGE.sendFile(context, context.params.attachment, next)
   })
 })

@@ -1,9 +1,7 @@
-import * as fs from 'fs'
-import * as path from 'path'
 import promisesAll from 'promises-all'
 import { getRepository, In } from 'typeorm'
 import { Attachment } from '../../../entities'
-import { ATTACHMENT_DIR } from '../../../attachment-const'
+import { STORAGE } from '../../../attachment-const'
 
 export async function deleteAttachmentsByRef(_: any, { refBys }, context: any) {
   const repository = getRepository(Attachment)
@@ -19,10 +17,7 @@ export async function deleteAttachmentsByRef(_: any, { refBys }, context: any) {
   //remove files from attachments folder
   await promisesAll.all(
     attachments.map(async attachment => {
-      const fullpath = path.resolve(ATTACHMENT_DIR, attachment.path)
-      await fs.unlink(fullpath, e => {
-        console.error(e)
-      })
+      await STORAGE.deleteFile(attachment.path)
     })
   )
 }

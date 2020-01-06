@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-koa'
+import gql from 'graphql-tag'
 
 export const Attachment = gql`
   type Attachment {
@@ -10,6 +10,7 @@ export const Attachment = gql`
     encoding: String
     category: String
     path: String
+    fullpath: String
     refBy: String
     size: String
     creator: User

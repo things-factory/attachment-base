@@ -1,3 +1,4 @@
 import { config } from '@things-factory/env'
 
-export const ATTACHMENT_DIR = (process.env.ATTACHMENT_DIR = config.getPath('attachmentsPath', 'attachments'))
+export var STORAGE: any = config.get('storage')
+export const ATTACHMENT_PATH: string = config.get('attachmentPath', 'attachment')
