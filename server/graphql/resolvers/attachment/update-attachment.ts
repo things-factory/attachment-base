@@ -2,12 +2,16 @@ import { getRepository } from 'typeorm'
 import { Attachment } from '../../../entities'
 
 export async function updateAttachment(_: any, { id, patch }, context: any) {
-  const repository = getRepository(Attachment)
-  const attachment = await repository.findOne({ id })
+  const attachment = await getRepository(Attachment).findOne({
+    where: {
+      domain: context.state.domain,
+      id
+    }
+  })
 
-  return await repository.save({
+  return await getRepository(Attachment).save({
     ...attachment,
     ...patch,
-    updaterId: context.state.user.name
+    updater: context.state.user
   })
 }
