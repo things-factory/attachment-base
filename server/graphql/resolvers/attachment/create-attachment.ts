@@ -3,7 +3,7 @@ import { Attachment } from '../../../entities'
 import { STORAGE } from '../../../attachment-const'
 
 export async function createAttachment(_: any, { attachment }, context: any) {
-  const { file, category, refBy } = attachment
+  const { file, category, refBy, description } = attachment
   const { createReadStream, filename, mimetype, encoding } = await file
   const stream = createReadStream()
 
@@ -14,6 +14,7 @@ export async function createAttachment(_: any, { attachment }, context: any) {
     creator: context.state.user,
     updater: context.state.user,
     id,
+    description,
     name: filename,
     mimetype,
     encoding,
