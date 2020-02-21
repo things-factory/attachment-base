@@ -8,10 +8,7 @@ export async function createAttachments(_: any, { attachments }, context: any) {
   )
 
   if (reject.length) {
-    reject.forEach(({ name, message }) =>
-      // eslint-disable-next-line no-console
-      logger.error(`${name}: ${message}`)
-    )
+    reject.forEach(({ name, message }) => logger.error(`${name}: ${message}`))
 
     return reject
   }
