@@ -103,7 +103,7 @@ if (STORAGE && STORAGE.type == 's3') {
       Key: attachment
     }).promise()
 
-    return result.Body
+    return result.Body.toString('utf-8')
   }
 
   logger.info('S3 Bucket Storage is Ready.')
