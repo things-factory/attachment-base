@@ -97,5 +97,14 @@ if (STORAGE && STORAGE.type == 's3') {
     context.body = await fs.createReadStream(`/${attachment}`)
   }
 
+  STORAGE.readFile = async attachment => {
+    const result = await S3.getObject({
+      Bucket: STORAGE.bucketName,
+      Key: attachment
+    }).promise()
+
+    return result.Body
+  }
+
   logger.info('S3 Bucket Storage is Ready.')
 }

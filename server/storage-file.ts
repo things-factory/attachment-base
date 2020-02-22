@@ -48,5 +48,11 @@ if (STORAGE && STORAGE.type == 'file') {
     await send(context, attachment, { root: uploadDir })
   }
 
+  STORAGE.readFile = attachment => {
+    const fullpath = resolve(uploadDir, attachment)
+
+    return fs.readFileSync(fullpath, 'utf-8')
+  }
+
   logger.info('File Storage is Ready.')
 }
