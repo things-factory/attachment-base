@@ -22,7 +22,7 @@ export const Mutation = `
   ): Attachment
 
   deleteAttachmentsByRef (
-    refBys: String!
+    refBys: [String]!
   ): Attachment
 
   singleUpload(
